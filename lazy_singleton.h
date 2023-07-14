@@ -1,7 +1,7 @@
 #ifndef JET_EVENTS_LAZY_SINGLETON_H_
 #define JET_EVENTS_LAZY_SINGLETON_H_
 
-namespace JET::events {
+namespace jet::events {
 template <typename T>
 class LazySingleton {
  public:
@@ -20,6 +20,6 @@ class LazySingleton {
 };
 
 #define SINGLETON(T) LazySingleton<T>::get()
-}  // namespace JET::events
+}  // namespace jet::events
 
 #endif

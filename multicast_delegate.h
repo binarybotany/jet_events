@@ -6,7 +6,7 @@
 
 #include "delegate.h"
 
-namespace JET::events {
+namespace jet::events {
 template <typename RET, typename... PARAMS>
 class MulticastDelegate<RET(PARAMS...)> final
     : private DelegateBase<RET(PARAMS...)> {
@@ -131,6 +131,6 @@ class MulticastDelegate<RET(PARAMS...)> final
   std::list<typename DelegateBase<RET(PARAMS...)>::InvocationElement *>
       mInvocations;
 };
-}  // namespace JET::events
+}  // namespace jet::events
 
 #endif

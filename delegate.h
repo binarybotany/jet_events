@@ -6,7 +6,7 @@
 /*******************************************************************************
  * Based on Sergey Alexandrovich Kryukov's Impossibly Fast C++ Delegate Fixed.
  ******************************************************************************/
-namespace JET::events {
+namespace jet::events {
 template <typename T>
 class Delegate;
 
@@ -125,6 +125,6 @@ class Delegate<RET(PARAMS...)> final : private DelegateBase<RET(PARAMS...)> {
   friend class MulticastDelegate<RET(PARAMS...)>;
   typename DelegateBase<RET(PARAMS...)>::InvocationElement mInvocation;
 };
-}  // namespace JET::events
+}  // namespace jet::events
 
 #endif
