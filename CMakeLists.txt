@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.4...3.20 FATAL_ERROR)
 
-project(jet_events)
+project(jet_events
+    VERSION 0.0.0.0 
+    LANGUAGES CXX 
+    DESCRIPTION "Jet Events library"
+    HOMEPAGE_URL "https://www.github.com/binarybotany/jet_events")
 
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 20)
