@@ -14,38 +14,47 @@ Header only event handling library using the
 
 ```cpp
 struct SomeEvent {
-    int id;
+  int id;
 };
 
 class Something {
-    void handler(void *sender, const SomeEvent &event) {
-        Something *something = static_cast<Something *>(sender);
+ public:
+  Something(unsigned int id) : mId(id) {}
 
-        // Handle event
-    }
+  void handler(void *sender, const SomeEvent &event) {
+    Something *something = static_cast<Something *>(sender);
+
+    // Handle event
+    std::cout << "Event id: " << event.id << std::endl;
+    std::cout << "Sender id: " << something->mId << std::endl;
+  }
+
+  unsigned int mId;
 };
 
-int main() {
-    Something something;
-    
-    // Define delegate
-    auto del = Delegate<void(void *, SomeEvent)>::create<
-        Something, &Something::handler>(&something);
+int main(int argc, char **argv) {
+  Something something(200);
 
-    // Define observer
-    std::unique_ptr<Observer<const SomeEvent &>> obs = 
-        std::make_unique<Observer<const SomeEvent &>>(del);
+  // Define delegate
+  auto del = Delegate<void(void *, const SomeEvent &)>::create<
+      Something, &Something::handler>(&something);
 
-    // Subscribe observer
-    LazySingleton<Subject<const SomeEvent &>>::get().subscribe(obs);
+  // Define observer
+  std::unique_ptr<Observer<const SomeEvent &>> obs =
+      std::make_unique<Observer<const SomeEvent &>>(del);
 
-    // Raise event
-    SomeEvent someEvent;
-    someEvent.id = 100;
+  // Subscribe observer
+  LazySingleton<Subject<const SomeEvent &>>::get().subscribe(obs.get());
 
-    LazySingleton<Subject<const SomeEvent &>>::get().raise(someEvent);
+  // Raise event
+  SomeEvent someEvent;
+  someEvent.id = 100;
 
-    // Unsubscribe observer
-    LazySingleton<Subject<const SomeEvent &>>::get().unsubscribe(obs);
+  LazySingleton<Subject<const SomeEvent &>>::get().raise(&something, someEvent);
+
+  // Unsubscribe observer
+  LazySingleton<Subject<const SomeEvent &>>::get().unsubscribe(obs.get());
+
+  return 0;
 }
 ```
